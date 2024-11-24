@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import React from 'react';
+import HomePage from './components/HomePage';
+import GamePage from './components/GamePage';
+import { GameProvider, useGame } from './context/GameContext';
 import './App.css';
+
+function AppContent() {
+  const { gameStarted, startGame } = useGame();
+
+  return (
+    <div className="App">
+      {!gameStarted ? (
+        <HomePage onStartGame={startGame} />
+      ) : (
+        <GamePage />
+      )}
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GameProvider>
+      <AppContent />
+    </GameProvider>
   );
 }
 
